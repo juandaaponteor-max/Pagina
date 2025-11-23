@@ -1,10 +1,3 @@
-<?php// =========================//  Gestión de datos (PHP)// =========================
-$file = "citas.json";
-// Si el archivo no existe, lo creaif(!file_exists($file)){    file_put_contents($file, "[]");}
-// Leer citas$data = json_decode(file_get_contents($file), true);
-// Guardar citaif(isset($_POST["action"]) && $_POST["action"] === "save"){    $new = [        "fullName" => $_POST["fullName"],        "email" => $_POST["email"],        "phone" => $_POST["phone"],        "passport" => $_POST["passport"],        "visaType" => $_POST["visaType"],        "date" => $_POST["date"],        "time" => $_POST["time"],        "notes" => $_POST["notes"]    ];    $data[] = $new;    file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT));    header("Location: index.php?ok=1");    exit;}
-// Borrar todas // if(isset($_GET["deleteAll"])){//     file_put_contents($file, "[]");//     header("Location: index.php");//     exit;// }
-// Exportar CSVif(isset($_GET["export"])){    header("Content-Type: text/csv");    header("Content-Disposition: attachment; filename=citas.csv");    $f = fopen("php://output", "w");    fputcsv($f, ["Nombre","Correo","Teléfono","Pasaporte","Visa","Fecha","Hora","Notas"]);    foreach($data as $c){        fputcsv($f, [            $c["fullName"], $c["email"], $c["phone"], $c["passport"],            $c["visaType"], $c["date"], $c["time"], $c["notes"]        ]);    }    exit;}?>
 <!doctype html><html lang="es"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>Agenda de Visas - ECCI</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>:root{  --ecci-blue:#003788;  --bg:#f7f9fc;  --card:#ffffff;  --muted:#6b7280;  --radius:14px;}
